@@ -1,9 +1,13 @@
 package ir.maktabsharif.onlinshop.models;
 
+import com.squareup.moshi.Json;
+
 public class Image {
 
+    @Json(name = "id")
     private long mID;
 
+    @Json(name = "src")
     private String mURL;
 
     public long getID() {
@@ -20,5 +24,13 @@ public class Image {
 
     public void setURL(String URL) {
         mURL = URL;
+    }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "mID=" + mID +
+                ", mURL='" + mURL + '\'' +
+                '}';
     }
 }
