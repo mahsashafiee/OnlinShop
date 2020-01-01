@@ -4,9 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 import java.util.Map;
@@ -33,15 +31,19 @@ public class HomeViewModel extends AndroidViewModel {
         mRequestQueue.addToRequestQueue(mRepository.wooCommerceRequest(qualifier, TAG, tClass, paths, queryParam));
     }
 
+    public void wooCommerceRequest(String TAG, @NonNull List<String> paths, @NonNull Map<String, String> queryParam) {
+        mRequestQueue.addToRequestQueue(mRepository.wooCommerceRequest(TAG, paths, queryParam));
+    }
+
     public MutableLiveData<List<Product>> getProductLiveData() {
         return mRepository.getProductData();
     }
 
-    public MutableLiveData<List<Category>> getCategoryLiveData() {
-        return mRepository.getCategoryData();
+    public MutableLiveData<List<Category>> getHomeCategoryLiveData() {
+        return mRepository.getHomeCategoryData();
     }
 
-    public MutableLiveData<List<Category>> getSliderLiveData(){
+    public MutableLiveData<Product> getSliderLiveData(){
         return mRepository.getSliderData();
     }
 

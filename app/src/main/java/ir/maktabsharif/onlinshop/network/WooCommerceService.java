@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -36,8 +38,9 @@ public class WooCommerceService {
     }
 
     private MutableLiveData<List<Product>> mProductData = new MutableLiveData();
-    private MutableLiveData<List<Category>> mCategoryData = new MutableLiveData();
-    private MutableLiveData<List<Category>> mSliderData = new MutableLiveData();
+    private MutableLiveData<List<Category>> mHomeCategoryData = new MutableLiveData();
+    private MutableLiveData<List<Category>> mMainCategoryData = new MutableLiveData();
+    private MutableLiveData<Product> mSliderData = new MutableLiveData();
 
 
     private WooCommerceService() {
@@ -68,15 +71,40 @@ public class WooCommerceService {
 
     }
 
+    public JsonObjectRequest wooCommerceRequest(String TAG, List<String> paths, Map<String, String> queryParams){
+        Moshi moshi = new Moshi.Builder().build();
+        Type type = Types.getRawType(Product.class);
+        final JsonAdapter<Product> adapter = moshi.adapter(type);
+
+        Response.Listener<JSONObject> listener = response -> {
+            try {
+                Product product = adapter.fromJson(response.toString());
+                mSliderData.setValue(product);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
+
+        Response.ErrorListener errorListener = error -> Log.e(TAG, "wooCommerceRequest: ", error );
+
+        JsonObjectRequest request = new JsonObjectRequest(getStringURL(paths, queryParams), null, listener, errorListener);
+        return request;
+    }
+
     public MutableLiveData<List<Product>> getProductData() {
         return mProductData;
     }
 
-    public MutableLiveData<List<Category>> getCategoryData() {
-        return mCategoryData;
+    public MutableLiveData<List<Category>> getMainCategoryData() {
+        return mMainCategoryData;
     }
 
-    public MutableLiveData<List<Category>> getSliderData() {
+    public MutableLiveData<List<Category>> getHomeCategoryData() {
+        return mHomeCategoryData;
+    }
+
+    public MutableLiveData<Product> getSliderData() {
         return mSliderData;
     }
 
@@ -86,11 +114,11 @@ public class WooCommerceService {
             case PRODUCTS:
                 mProductData.setValue((List<Product>) models);
                 break;
-            case CATEGORIES:
-                mCategoryData.setValue((List<Category>) models);
+            case HOMECATEGORIES:
+                mHomeCategoryData.setValue((List<Category>) models);
                 break;
-            case SLIDER:
-                mSliderData.setValue((List<Category>) models);
+            case MAINCATEGORY:
+                mMainCategoryData.setValue((List<Category>) models);
                 break;
 
         }

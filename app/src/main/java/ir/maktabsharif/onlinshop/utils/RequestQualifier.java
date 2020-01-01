@@ -1,5 +1,5 @@
 package ir.maktabsharif.onlinshop.utils;
 
 public enum RequestQualifier {
-    PRODUCTS, CATEGORIES, SLIDER
+    PRODUCTS, HOMECATEGORIES, MAINCATEGORY, SLIDER, SINGLEPRODUCT
 }

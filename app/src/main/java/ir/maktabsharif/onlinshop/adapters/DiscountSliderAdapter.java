@@ -9,20 +9,19 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
-import java.util.List;
-
 import ir.maktabsharif.onlinshop.R;
-import ir.maktabsharif.onlinshop.models.Category;
+import ir.maktabsharif.onlinshop.models.Image;
+import ir.maktabsharif.onlinshop.models.Product;
 import ir.maktabsharif.onlinshop.network.WooCommerceRequestQueue;
 
 public class DiscountSliderAdapter extends SliderViewAdapter<DiscountSliderAdapter.DiscountImageHolder> {
 
-    private List<Category> mCategories;
+    private Product mProduct;
     private Context mContext;
 
-    public DiscountSliderAdapter(Context context, List<Category> categories) {
+    public DiscountSliderAdapter(Context context, Product product) {
         mContext = context;
-        mCategories = categories;
+        mProduct = product;
     }
 
     @Override
@@ -33,19 +32,18 @@ public class DiscountSliderAdapter extends SliderViewAdapter<DiscountSliderAdapt
 
     @Override
     public void onBindViewHolder(DiscountImageHolder viewHolder, int position) {
-        viewHolder.bind(mCategories.get(position));
+        viewHolder.bind(mProduct.getImages().get(position));
     }
 
     @Override
     public int getCount() {
-        return mCategories.size();
+        return mProduct.getImages().size();
     }
 
     public class DiscountImageHolder extends SliderViewAdapter.ViewHolder {
 
         private NetworkImageView mSliderImage;
         private ImageLoader mImageLoader;
-        private Category mCategory;
 
         public DiscountImageHolder(View itemView) {
             super(itemView);
@@ -53,15 +51,14 @@ public class DiscountSliderAdapter extends SliderViewAdapter<DiscountSliderAdapt
             mImageLoader = WooCommerceRequestQueue.getInstance(mContext).getImageLoader();
         }
 
-        public void bind(Category category){
-            mCategory = category;
-            mImageLoader.get(mCategory.getImage().getURL(),
+        public void bind(Image image){
+            mImageLoader.get(image.getURL(),
                     ImageLoader.getImageListener(mSliderImage,
                             R.drawable.image_placeholder,
                             R.drawable.error_placeholder));
 
 
-            mSliderImage.setImageUrl(mCategory.getImage().getURL(), mImageLoader);
+            mSliderImage.setImageUrl(image.getURL(), mImageLoader);
 
 
         }

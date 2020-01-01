@@ -20,42 +20,48 @@ import ir.maktabsharif.onlinshop.models.Category;
 import ir.maktabsharif.onlinshop.network.WooCommerceRequestQueue;
 import ir.maktabsharif.onlinshop.utils.SquareNetworkImage;
 
-public class ColorCategoryAdapter extends RecyclerView.Adapter<ColorCategoryAdapter.ColorHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ColorHolder> {
 
     private Context mContext;
     private List<Category> mCategories;
+    private boolean isMain;
 
     private final int[] colors = new int[]{
-            R.color.orange_A400,
+            R.color.red_A400,
             R.color.pink_A400,
             R.color.purple_A400,
-            R.color.green_A400,
-            R.color.amber_A400,
             R.color.deep_purple_A400,
             R.color.indigo_A400,
             R.color.blue_A400,
             R.color.light_blue_A400,
             R.color.cyan_A400,
             R.color.teal_A400,
+            R.color.green_A400,
+            R.color.amber_A400,
+            R.color.orange_A400,
             R.color.deep_orange_A400,
-            R.color.red_A400,
             R.color.brown_400,
-            R.color.brown_800,
             R.color.gray_400,
             R.color.gray_800,
             R.color.blue_gray_400
     };
 
-    public ColorCategoryAdapter(Context context, List<Category> categories) {
+    public CategoryAdapter(Context context, List<Category> categories) {
         mContext = context;
         mCategories = categories;
+    }
+
+    public CategoryAdapter(Context context, List<Category> categories, boolean isMain) {
+        mContext = context;
+        mCategories = categories;
+        this.isMain = isMain;
     }
 
     @NonNull
     @Override
     public ColorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.color_category_list_item, parent, false);
+                .inflate(R.layout.category_list_item, parent, false);
         return new ColorHolder(itemView);
     }
 
@@ -87,9 +93,6 @@ public class ColorCategoryAdapter extends RecyclerView.Adapter<ColorCategoryAdap
 
         public void bind(Category category, int parsedColor){
 
-            if (category.getParentID() == 119)
-                return;
-
             mCategory = category;
 
             imageLoader.get(mCategory.getImage().getURL(),
@@ -101,8 +104,15 @@ public class ColorCategoryAdapter extends RecyclerView.Adapter<ColorCategoryAdap
             mNetworkImage.setImageUrl(mCategory.getImage().getURL(), imageLoader);
             mNetworkImage.setColorFilter(Color.WHITE);
             mNetworkImage.setBackgroundColor(parsedColor);
-
             mTextView.setText(mCategory.getName());
+
+            if (isMain){
+                mNetworkImage.setPadding(88, 88, 88, 88);
+                mTextView.setVisibility(View.GONE);
+            }else
+                mTextView.setVisibility(View.VISIBLE);
+
+
         }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#004A41</color>
-    <color name="colorPrimaryDark">#E2C8AE</color>
+    <color name="colorPrimary">#FD6144</color>
+    <color name="colorPrimaryDark">#14234B</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="red_A400">#FF1744</color> <!-- LIGHT -->
@@ -23,6 +23,6 @@
     <color name="gray_800">#212121</color> <!-- LIGHT -->
     <color name="blue_gray_400">#78909C</color> <!-- LIGHT -->
 
-    <color name="search_view_color">#BFFFFFFF</color>
+    <color name="search_view_color">#E6FFFFFF</color>
 
 </resources>

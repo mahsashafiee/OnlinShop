@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import ir.maktabsharif.onlinshop.R;
-import ir.maktabsharif.onlinshop.adapters.ColorCategoryAdapter;
+import ir.maktabsharif.onlinshop.adapters.CategoryAdapter;
 import ir.maktabsharif.onlinshop.adapters.DiscountSliderAdapter;
 import ir.maktabsharif.onlinshop.adapters.ProductAdapter;
 import ir.maktabsharif.onlinshop.models.Category;
@@ -37,22 +37,19 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel mHomeViewModel;
     private ProductAdapter mAdapter;
-    private ColorCategoryAdapter mColorCategoryAdapter;
+    private CategoryAdapter mCategoryAdapter;
     private DiscountSliderAdapter mSliderAdapter;
     private RecyclerView mProductsRecyclerView;
     private RecyclerView mCategoriesRecyclerView;
     private SliderView mSliderView;
     private List<String> mProductsPaths = new ArrayList<String>() {{ add("products"); }};
+    private List<String> mSliderPaths = new ArrayList<String>(mProductsPaths) {{ add(String.valueOf(608)); }};
     private List<String> mCategoriesPaths = new ArrayList<String>(mProductsPaths) {{ add("categories"); }};
     private Map<String, String> mProductsQueryParam = new HashMap<String, String>() {{
         put("orderby", "date");
     }};
     private Map<String, String> mCategoriesQueryParam = new HashMap<String, String>() {{
         put("parent", String.valueOf(0));
-    }};
-
-    private Map<String, String> mSliderQueryParam = new HashMap<String, String>() {{
-        put("parent", String.valueOf(119));
     }};
 
 
@@ -67,8 +64,8 @@ public class HomeFragment extends Fragment {
 
     private void setupRequest() {
         mHomeViewModel.wooCommerceRequest(RequestQualifier.PRODUCTS, TAG, Product.class, mProductsPaths, mProductsQueryParam);
-        mHomeViewModel.wooCommerceRequest(RequestQualifier.CATEGORIES, TAG, Category.class, mCategoriesPaths, mCategoriesQueryParam);
-        mHomeViewModel.wooCommerceRequest(RequestQualifier.SLIDER, TAG, Category.class, mCategoriesPaths, mSliderQueryParam);
+        mHomeViewModel.wooCommerceRequest(RequestQualifier.HOMECATEGORIES, TAG, Category.class, mCategoriesPaths, mCategoriesQueryParam);
+        mHomeViewModel.wooCommerceRequest( TAG, mSliderPaths, new HashMap<>());
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,7 +81,7 @@ public class HomeFragment extends Fragment {
     private void setupObservers() {
 
         mHomeViewModel.getProductLiveData().observe(this, products -> setupAdapter(products));
-        mHomeViewModel.getCategoryLiveData().observe(this, categories -> setupCategoryAdapter(categories));
+        mHomeViewModel.getHomeCategoryLiveData().observe(this, categories -> setupCategoryAdapter(categories));
         mHomeViewModel.getSliderLiveData().observe(this, categories -> setupSliderAdapter(categories));
     }
 
@@ -103,12 +100,12 @@ public class HomeFragment extends Fragment {
     }
 
     public void setupCategoryAdapter(List<Category> categories) {
-        mColorCategoryAdapter = new ColorCategoryAdapter(getContext(), categories);
-        mCategoriesRecyclerView.setAdapter(mColorCategoryAdapter);
+        mCategoryAdapter = new CategoryAdapter(getContext(), categories);
+        mCategoriesRecyclerView.setAdapter(mCategoryAdapter);
     }
 
-    public void setupSliderAdapter(List<Category> categories) {
-        mSliderAdapter = new DiscountSliderAdapter(getContext(), categories);
+    public void setupSliderAdapter(Product product) {
+        mSliderAdapter = new DiscountSliderAdapter(getContext(), product);
         mSliderView.setSliderAdapter(mSliderAdapter);
         //set indicator animation by using SliderLayout.IndicatorAnimations.
         //:WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!

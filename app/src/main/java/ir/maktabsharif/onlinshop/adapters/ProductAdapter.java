@@ -54,6 +54,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         private TextView mProductName;
         private TextView mProductPrice;
 
+
         public ProductHolder(@NonNull View itemView) {
             super(itemView);
             mProductImage = itemView.findViewById(R.id.item_product_image);
@@ -63,6 +64,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         }
 
         public void bind(Product product) {
+            if (product.getID() == 608)
+                return;
+
             mProduct = product;
 
             mImageLoader.get(mProduct.getImages().get(0).getURL(),
