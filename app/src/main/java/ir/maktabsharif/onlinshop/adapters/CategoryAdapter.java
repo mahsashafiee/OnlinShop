@@ -91,7 +91,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ColorH
             imageLoader = WooCommerceRequestQueue.getInstance(mContext).getImageLoader();
         }
 
-        public void bind(Category category, int parsedColor){
+        public void bind(Category category, int parsedColor) {
 
             mCategory = category;
 
@@ -106,10 +106,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ColorH
             mNetworkImage.setBackgroundColor(parsedColor);
             mTextView.setText(mCategory.getName());
 
-            if (isMain){
+            if (isMain) {
                 mNetworkImage.setPadding(88, 88, 88, 88);
                 mTextView.setVisibility(View.GONE);
-            }else
+            } else
                 mTextView.setVisibility(View.VISIBLE);
 
 

@@ -71,7 +71,7 @@ public class WooCommerceService {
 
     }
 
-    public JsonObjectRequest wooCommerceRequest(String TAG, List<String> paths, Map<String, String> queryParams){
+    public JsonObjectRequest wooCommerceRequest(String TAG, List<String> paths, Map<String, String> queryParams) {
         Moshi moshi = new Moshi.Builder().build();
         Type type = Types.getRawType(Product.class);
         final JsonAdapter<Product> adapter = moshi.adapter(type);
@@ -86,7 +86,7 @@ public class WooCommerceService {
             }
         };
 
-        Response.ErrorListener errorListener = error -> Log.e(TAG, "wooCommerceRequest: ", error );
+        Response.ErrorListener errorListener = error -> Log.e(TAG, "wooCommerceRequest: ", error);
 
         JsonObjectRequest request = new JsonObjectRequest(getStringURL(paths, queryParams), null, listener, errorListener);
         return request;

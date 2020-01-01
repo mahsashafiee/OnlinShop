@@ -43,7 +43,7 @@ public class HomeViewModel extends AndroidViewModel {
         return mRepository.getHomeCategoryData();
     }
 
-    public MutableLiveData<Product> getSliderLiveData(){
+    public MutableLiveData<Product> getSliderLiveData() {
         return mRepository.getSliderData();
     }
 

@@ -38,6 +38,7 @@ public class CategoriesFragment extends Fragment {
     private Map<String, String> mCategoriesQueryParam = new HashMap<String, String>() {{
         put("per_page", String.valueOf(18));
     }};
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

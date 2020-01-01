@@ -42,9 +42,15 @@ public class HomeFragment extends Fragment {
     private RecyclerView mProductsRecyclerView;
     private RecyclerView mCategoriesRecyclerView;
     private SliderView mSliderView;
-    private List<String> mProductsPaths = new ArrayList<String>() {{ add("products"); }};
-    private List<String> mSliderPaths = new ArrayList<String>(mProductsPaths) {{ add(String.valueOf(608)); }};
-    private List<String> mCategoriesPaths = new ArrayList<String>(mProductsPaths) {{ add("categories"); }};
+    private List<String> mProductsPaths = new ArrayList<String>() {{
+        add("products");
+    }};
+    private List<String> mSliderPaths = new ArrayList<String>(mProductsPaths) {{
+        add(String.valueOf(608));
+    }};
+    private List<String> mCategoriesPaths = new ArrayList<String>(mProductsPaths) {{
+        add("categories");
+    }};
     private Map<String, String> mProductsQueryParam = new HashMap<String, String>() {{
         put("orderby", "date");
     }};
@@ -65,7 +71,7 @@ public class HomeFragment extends Fragment {
     private void setupRequest() {
         mHomeViewModel.wooCommerceRequest(RequestQualifier.PRODUCTS, TAG, Product.class, mProductsPaths, mProductsQueryParam);
         mHomeViewModel.wooCommerceRequest(RequestQualifier.HOMECATEGORIES, TAG, Category.class, mCategoriesPaths, mCategoriesQueryParam);
-        mHomeViewModel.wooCommerceRequest( TAG, mSliderPaths, new HashMap<>());
+        mHomeViewModel.wooCommerceRequest(TAG, mSliderPaths, new HashMap<>());
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

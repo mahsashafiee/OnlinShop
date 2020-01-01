@@ -51,7 +51,7 @@ public class DiscountSliderAdapter extends SliderViewAdapter<DiscountSliderAdapt
             mImageLoader = WooCommerceRequestQueue.getInstance(mContext).getImageLoader();
         }
 
-        public void bind(Image image){
+        public void bind(Image image) {
             mImageLoader.get(image.getURL(),
                     ImageLoader.getImageListener(mSliderImage,
                             R.drawable.image_placeholder,
