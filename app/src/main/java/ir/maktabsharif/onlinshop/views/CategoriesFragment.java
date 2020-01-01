@@ -13,19 +13,19 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import ir.maktabsharif.onlinshop.R;
-import ir.maktabsharif.onlinshop.viewmodels.NotificationsViewModel;
+import ir.maktabsharif.onlinshop.viewmodels.CategoryViewModel;
 
-public class NotificationsFragment extends Fragment {
+public class CategoriesFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private CategoryViewModel mCategoryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(this, new Observer<String>() {
+        mCategoryViewModel =
+                ViewModelProviders.of(this).get(CategoryViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_categories, container, false);
+        final TextView textView = root.findViewById(R.id.text_dashboard);
+        mCategoryViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

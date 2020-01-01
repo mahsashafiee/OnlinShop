@@ -47,6 +47,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
     public class ProductHolder extends RecyclerView.ViewHolder {
 
+        private final ImageLoader mImageLoader;
         private Product mProduct;
 
         private NetworkImageView mProductImage;
@@ -58,22 +59,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
             mProductImage = itemView.findViewById(R.id.item_product_image);
             mProductName = itemView.findViewById(R.id.item_product_name);
             mProductPrice = itemView.findViewById(R.id.item_product_price);
+            mImageLoader = WooCommerceRequestQueue.getInstance(mContext).getImageLoader();
         }
 
         public void bind(Product product) {
             mProduct = product;
 
-            ImageLoader imageLoader = WooCommerceRequestQueue.getInstance(mContext).getImageLoader();
-            imageLoader.get(mProduct.getImages().get(0).getURL(),
+            mImageLoader.get(mProduct.getImages().get(0).getURL(),
                     ImageLoader.getImageListener(mProductImage,
                             R.drawable.image_placeholder,
                             R.drawable.error_placeholder));
 
 
-            mProductImage.setImageUrl(mProduct.getImages().get(0).getURL(), imageLoader);
+            mProductImage.setImageUrl(mProduct.getImages().get(0).getURL(), mImageLoader);
             mProductName.setText(product.getName());
 
-            mProductPrice.setText("$" + product.getPrice());
+            mProductPrice.setText(mContext.getString(R.string.product_price, mProduct.getPrice()));
 
         }
     }

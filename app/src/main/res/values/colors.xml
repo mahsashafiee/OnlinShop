@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#004A41</color>
+    <color name="colorPrimaryDark">#E2C8AE</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="red_A400">#FF1744</color> <!-- LIGHT -->
+    <color name="pink_A400">#FA4887</color> <!-- LIGHT -->
+    <color name="purple_A400">#CC02EE</color> <!-- LIGHT -->
+    <color name="deep_purple_A400">#651FFF</color> <!-- LIGHT -->
+    <color name="indigo_A400">#3D5AFE</color> <!-- LIGHT -->
+    <color name="blue_A400">#2979FF</color> <!-- LIGHT -->
+    <color name="light_blue_A400">#00B0FF</color> <!-- DARK -->
+    <color name="cyan_A400">#00E5FF</color> <!-- DARK -->
+    <color name="teal_A400">#1DE9B6</color> <!-- DARK -->
+    <color name="green_A400">#00743B</color> <!-- DARK -->
+    <color name="amber_A400">#FFD350</color> <!-- DARK -->
+    <color name="orange_A400">#FF8400</color> <!-- DARK -->
+    <color name="deep_orange_A400">#FF3D00</color> <!-- LIGHT -->
+    <color name="brown_400">#8D6E63</color> <!-- LIGHT -->
+    <color name="brown_800">#A75C43</color> <!-- LIGHT -->
+    <color name="gray_400">#BDBDBD</color> <!-- DARK -->
+    <color name="gray_800">#212121</color> <!-- LIGHT -->
+    <color name="blue_gray_400">#78909C</color> <!-- LIGHT -->
+
+    <color name="search_view_color">#BFFFFFFF</color>
+
 </resources>

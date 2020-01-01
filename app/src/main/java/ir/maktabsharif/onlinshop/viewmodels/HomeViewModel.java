@@ -9,11 +9,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
+import java.util.Map;
 
 import ir.maktabsharif.onlinshop.models.Category;
 import ir.maktabsharif.onlinshop.models.Product;
 import ir.maktabsharif.onlinshop.network.WooCommerceRequestQueue;
 import ir.maktabsharif.onlinshop.network.WooCommerceService;
+import ir.maktabsharif.onlinshop.utils.RequestQualifier;
 
 public class HomeViewModel extends AndroidViewModel {
 
@@ -27,18 +29,23 @@ public class HomeViewModel extends AndroidViewModel {
         mRepository = WooCommerceService.getInstance();
     }
 
-    public <T> void wooCommerceRequest(String TAG, Class<T> tClass, @NonNull String path, @NonNull String orderby){
-        mRequestQueue.addToRequestQueue(mRepository.wooCommerceRequest(TAG, tClass, path, orderby));
+    public <T> void wooCommerceRequest(RequestQualifier qualifier, String TAG, Class<T> tClass, @NonNull List<String> paths, @NonNull Map<String, String> queryParam) {
+        mRequestQueue.addToRequestQueue(mRepository.wooCommerceRequest(qualifier, TAG, tClass, paths, queryParam));
     }
 
-    public MutableLiveData<List<Product>> getProductLiveData(){
+    public MutableLiveData<List<Product>> getProductLiveData() {
         return mRepository.getProductData();
     }
-    public MutableLiveData<List<Category>> getCategoryLiveData(){
+
+    public MutableLiveData<List<Category>> getCategoryLiveData() {
         return mRepository.getCategoryData();
     }
 
-    public void cancelBatchRequest(String TAG){
+    public MutableLiveData<List<Category>> getSliderLiveData(){
+        return mRepository.getSliderData();
+    }
+
+    public void cancelBatchRequest(String TAG) {
         mRequestQueue.getRequestQueue().cancelAll(TAG);
     }
 }

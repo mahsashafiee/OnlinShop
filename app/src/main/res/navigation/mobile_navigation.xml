@@ -12,14 +12,21 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="ir.maktabsharif.onlinshop.views.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_categories"
+        android:name="ir.maktabsharif.onlinshop.views.CategoriesFragment"
+        android:label="@string/title_categories"
+        tools:layout="@layout/fragment_categories" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="ir.maktabsharif.onlinshop.views.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_shopping_card"
+        android:name="ir.maktabsharif.onlinshop.views.ShoppingCardFragment"
+        android:label="@string/title_shopping_card"
+        tools:layout="@layout/fragment_shopping_card" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="ir.maktabsharif.onlinshop.views.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/profile_fragment" />
+
 </navigation>

@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">OnlinShop</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">OnlineShop</string>
+    <string name="title_home">خانه</string>
+    <string name="title_categories">دسته بندی ها</string>
+    <string name="title_shopping_card">سبد خرید</string>
+    <string name="title_profile">پروفایل</string>
+
+    <string name="product_price">تومان %1$s</string>
+
+    <string name="search_view_hint">جستوجو…</string>
 </resources>

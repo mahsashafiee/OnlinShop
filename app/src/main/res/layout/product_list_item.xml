@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_product_card"
-    android:layout_width="160dp"
+    android:layout_width="144dp"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_margin="2dp"
     app:cardCornerRadius="2dp">
 
     <LinearLayout
@@ -46,9 +46,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ellipsize="end"
+            android:gravity="start"
             android:padding="6dp"
             android:singleLine="true"
+            android:textDirection="ltr"
             android:textSize="12sp"
+            tools:targetApi="jelly_bean_mr1"
             tools:text="@tools:sample/full_names" />
 
     </LinearLayout>

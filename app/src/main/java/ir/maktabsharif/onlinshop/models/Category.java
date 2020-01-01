@@ -7,6 +7,9 @@ public class Category {
     @Json(name = "id")
     private long mID;
 
+    @Json(name = "parent")
+    private long mParentID;
+
     @Json(name = "name")
     private String mName;
 
@@ -46,6 +49,14 @@ public class Category {
 
     public void setCount(int count) {
         mCount = count;
+    }
+
+    public long getParentID() {
+        return mParentID;
+    }
+
+    public void setParentID(long parentID) {
+        mParentID = parentID;
     }
 
     @Override

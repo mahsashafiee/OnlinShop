@@ -1,10 +1,7 @@
 package ir.maktabsharif.onlinshop.network;
 
-import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.android.volley.Response;
@@ -18,10 +15,13 @@ import org.json.JSONArray;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 import ir.maktabsharif.onlinshop.models.Category;
 import ir.maktabsharif.onlinshop.models.Product;
-import ir.maktabsharif.onlinshop.utils.Constants;
+import ir.maktabsharif.onlinshop.utils.RequestQualifier;
+
+import static ir.maktabsharif.onlinshop.utils.Utils.getStringURL;
 
 public class WooCommerceService {
 
@@ -37,12 +37,13 @@ public class WooCommerceService {
 
     private MutableLiveData<List<Product>> mProductData = new MutableLiveData();
     private MutableLiveData<List<Category>> mCategoryData = new MutableLiveData();
+    private MutableLiveData<List<Category>> mSliderData = new MutableLiveData();
 
 
     private WooCommerceService() {
     }
 
-    public <T> JsonArrayRequest wooCommerceRequest(String TAG, Class<T> tClass, @NonNull String path, @NonNull String orderby) {
+    public <T> JsonArrayRequest wooCommerceRequest(RequestQualifier qualifier, String TAG, Class<T> tClass, List<String> paths, Map<String, String> queryParam) {
 
         Moshi moshi = new Moshi.Builder().build();
         Type type = Types.newParameterizedType(List.class, tClass);
@@ -52,7 +53,7 @@ public class WooCommerceService {
             try {
                 List<T> models = adapter.fromJson(response.toString());
 
-                setLiveDataValue(tClass, models);
+                setLiveDataValue(qualifier, models);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -60,22 +61,11 @@ public class WooCommerceService {
         };
         Response.ErrorListener errorListener = error -> Log.e(this.TAG, "onErrorResponse: ", error);
 
-        JsonArrayRequest request = new JsonArrayRequest(getStringURL(path, orderby), listener, errorListener);
+        JsonArrayRequest request = new JsonArrayRequest(getStringURL(paths, queryParam), listener, errorListener);
         request.setTag(TAG);
 
         return request;
 
-    }
-
-    private String getStringURL(@NonNull String path, @NonNull String orderby) {
-        return Uri.parse(Constants.BASE_URL)
-                .buildUpon()
-                .appendPath(path)
-                .appendQueryParameter("consumer_key", Constants.CONSUMER_KEY)
-                .appendQueryParameter("consumer_secret", Constants.CONSUMER_SECRET)
-                .appendQueryParameter("orderby", orderby)
-                .build()
-                .toString();
     }
 
     public MutableLiveData<List<Product>> getProductData() {
@@ -86,13 +76,23 @@ public class WooCommerceService {
         return mCategoryData;
     }
 
-    private <T> void setLiveDataValue(Class<T> type, List<T> models) {
+    public MutableLiveData<List<Category>> getSliderData() {
+        return mSliderData;
+    }
 
-        if (type.equals(Product.class))
-            mProductData.setValue((List<Product>) models);
+    private <T> void setLiveDataValue(RequestQualifier qualifier, List<T> models) {
 
-        else if (type.equals(Category.class))
-            mCategoryData.setValue((List<Category>) models);
+        switch (qualifier) {
+            case PRODUCTS:
+                mProductData.setValue((List<Product>) models);
+                break;
+            case CATEGORIES:
+                mCategoryData.setValue((List<Category>) models);
+                break;
+            case SLIDER:
+                mSliderData.setValue((List<Category>) models);
+                break;
 
+        }
     }
 }

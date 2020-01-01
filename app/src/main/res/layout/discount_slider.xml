@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_slider"
+    android:layout_width="match_parent"
+    android:layout_height="124dp"
+    android:layout_marginStart="32dp"
+    android:layout_marginTop="64dp"
+    android:layout_marginEnd="32dp"
+    app:cardCornerRadius="8dp">
+
+    <com.smarteist.autoimageslider.SliderView
+        android:id="@+id/imageSlider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:sliderAnimationDuration="1000"
+        app:sliderAutoCycleDirection="right"
+        app:sliderIndicatorAnimationDuration="1000"
+        app:sliderIndicatorGravity="center_horizontal|bottom"
+        app:sliderIndicatorMargin="8dp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorPadding="2dp"
+        app:sliderIndicatorRadius="1dp"
+        app:sliderIndicatorSelectedColor="#5A5A5A"
+        app:sliderIndicatorUnselectedColor="#FFF"
+        app:sliderScrollTimeInSec="4"
+        app:sliderStartAutoCycle="true" />
+
+</androidx.cardview.widget.CardView>

@@ -3,27 +3,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="116dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimaryDark">
+
+            <EditText
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/seach_view_background"
+                android:drawableStart="@drawable/ic_search_black_24dp"
+                android:drawableLeft="@drawable/ic_search_black_24dp"
+                android:elevation="8dp"
+                android:gravity="center_vertical"
+                android:hint="@string/search_view_hint"
+                android:padding="8dp" />
+        </FrameLayout>
+
+        <include layout="@layout/discount_slider" />
+
+
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_margin="6dp"
+            android:id="@+id/categories_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="horizontal" />
+            android:layout_below="@id/card_slider"
+            android:layout_margin="8dp"
+            android:foregroundGravity="fill"
+            android:orientation="horizontal"
+            android:padding="2dp"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            tools:listitem="@layout/color_category_list_item" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/on_sale_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/categories_recycler_view"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/product_list_item" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>
