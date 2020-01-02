@@ -22,10 +22,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
     private Context mContext;
     private List<Product> mProducts;
+    private SetProductOnClickListener mProductOnClickListener;
 
     public ProductAdapter(Context context, List<Product> products) {
         mContext = context;
         mProducts = products;
+        mProductOnClickListener = (SetProductOnClickListener) context;
     }
 
     @NonNull
@@ -45,7 +47,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         return mProducts.size();
     }
 
-    public class ProductHolder extends RecyclerView.ViewHolder {
+
+    public interface SetProductOnClickListener {
+        void onProductClicked(@NonNull long id);
+    }
+
+    public class ProductHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageLoader mImageLoader;
         private Product mProduct;
@@ -61,11 +68,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
             mProductName = itemView.findViewById(R.id.item_product_name);
             mProductPrice = itemView.findViewById(R.id.item_product_price);
             mImageLoader = WooCommerceRequestQueue.getInstance(mContext).getImageLoader();
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Product product) {
-            if (product.getID() == 608)
-                return;
 
             mProduct = product;
 
@@ -80,6 +86,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
             mProductPrice.setText(mContext.getString(R.string.product_price, mProduct.getPrice()));
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            mProductOnClickListener.onProductClicked(mProduct.getID());
         }
     }
 }

@@ -16,8 +16,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import ir.maktabsharif.onlinshop.models.Category;
 import ir.maktabsharif.onlinshop.models.Product;
@@ -25,28 +25,31 @@ import ir.maktabsharif.onlinshop.utils.RequestQualifier;
 
 import static ir.maktabsharif.onlinshop.utils.Utils.getStringURL;
 
-public class WooCommerceService {
+public class WooCommerceRepository {
 
-    private static final String TAG = "WooCommerceService";
+    private static final String TAG = "WooCommerceRepository";
 
-    private static WooCommerceService sInstance;
+    private static WooCommerceRepository sInstance;
 
-    public static WooCommerceService getInstance() {
+    public static WooCommerceRepository getInstance() {
         if (sInstance == null)
-            sInstance = new WooCommerceService();
+            sInstance = new WooCommerceRepository();
         return sInstance;
     }
 
-    private MutableLiveData<List<Product>> mProductData = new MutableLiveData();
+    private MutableLiveData<List<Product>> mOnSaleProductData = new MutableLiveData();
+    private MutableLiveData<List<Product>> mTopRatedProductData = new MutableLiveData();
+    private MutableLiveData<List<Product>> mOnPopularProductData = new MutableLiveData();
+    private MutableLiveData<List<Product>> mRecentProductData = new MutableLiveData();
     private MutableLiveData<List<Category>> mHomeCategoryData = new MutableLiveData();
     private MutableLiveData<List<Category>> mMainCategoryData = new MutableLiveData();
     private MutableLiveData<Product> mSliderData = new MutableLiveData();
 
 
-    private WooCommerceService() {
+    private WooCommerceRepository() {
     }
 
-    public <T> JsonArrayRequest wooCommerceRequest(RequestQualifier qualifier, String TAG, Class<T> tClass, List<String> paths, Map<String, String> queryParam) {
+    public <T> JsonArrayRequest wooCommerceAsyncRequest(RequestQualifier qualifier, String TAG, Class<T> tClass) {
 
         Moshi moshi = new Moshi.Builder().build();
         Type type = Types.newParameterizedType(List.class, tClass);
@@ -64,14 +67,18 @@ public class WooCommerceService {
         };
         Response.ErrorListener errorListener = error -> Log.e(this.TAG, "onErrorResponse: ", error);
 
-        JsonArrayRequest request = new JsonArrayRequest(getStringURL(paths, queryParam), listener, errorListener);
+        JsonArrayRequest request = new JsonArrayRequest(
+                getStringURL(qualifier.getPath(), qualifier.getQueryParam()),
+                listener,
+                errorListener);
         request.setTag(TAG);
 
         return request;
 
     }
 
-    public JsonObjectRequest wooCommerceRequest(String TAG, List<String> paths, Map<String, String> queryParams) {
+    public JsonObjectRequest wooCommerceAsyncRequest(String TAG, int id) {
+
         Moshi moshi = new Moshi.Builder().build();
         Type type = Types.getRawType(Product.class);
         final JsonAdapter<Product> adapter = moshi.adapter(type);
@@ -86,14 +93,20 @@ public class WooCommerceService {
             }
         };
 
-        Response.ErrorListener errorListener = error -> Log.e(TAG, "wooCommerceRequest: ", error);
+        Response.ErrorListener errorListener = error -> Log.e(this.TAG, "wooCommerceAsyncRequest: ", error);
 
-        JsonObjectRequest request = new JsonObjectRequest(getStringURL(paths, queryParams), null, listener, errorListener);
+        JsonObjectRequest request = new JsonObjectRequest(
+                getStringURL(String.valueOf(id), new HashMap<>()),
+                null,
+                listener,
+                errorListener);
+
+        request.setTag(TAG);
         return request;
     }
 
-    public MutableLiveData<List<Product>> getProductData() {
-        return mProductData;
+    public MutableLiveData<List<Product>> getOnSaleProductData() {
+        return mOnSaleProductData;
     }
 
     public MutableLiveData<List<Category>> getMainCategoryData() {
@@ -108,16 +121,36 @@ public class WooCommerceService {
         return mSliderData;
     }
 
-    private <T> void setLiveDataValue(RequestQualifier qualifier, List<T> models) {
+    public MutableLiveData<List<Product>> getTopRatedProductData() {
+        return mTopRatedProductData;
+    }
 
+    public MutableLiveData<List<Product>> getOnPopularProductData() {
+        return mOnPopularProductData;
+    }
+
+    public MutableLiveData<List<Product>> getRecentProductData() {
+        return mRecentProductData;
+    }
+
+    private <T> void setLiveDataValue(RequestQualifier qualifier, List<T> models) {
         switch (qualifier) {
-            case PRODUCTS:
-                mProductData.setValue((List<Product>) models);
+            case ON_SALE_PRODUCTS:
+                mOnSaleProductData.setValue((List<Product>) models);
                 break;
-            case HOMECATEGORIES:
+            case TOP_RATED_PRODUCT:
+                mTopRatedProductData.setValue((List<Product>) models);
+                break;
+            case RECENT_PRODUCTS:
+                mRecentProductData.setValue((List<Product>) models);
+                break;
+            case POPULAR_PRODUCT:
+                mOnPopularProductData.setValue((List<Product>) models);
+                break;
+            case MAIN_CATEGORIES:
                 mHomeCategoryData.setValue((List<Category>) models);
                 break;
-            case MAINCATEGORY:
+            case ALL_CATEGORIES:
                 mMainCategoryData.setValue((List<Category>) models);
                 break;
 

@@ -8,4 +8,9 @@
     <string name="product_price">تومان %1$s</string>
 
     <string name="search_view_hint">جستجو…</string>
+
+    <string name="label_on_sale_products">پیشنهاد شگفت انگیر</string>
+    <string name="label_recent_products">جدیدترین محصولات</string>
+    <string name="label_top_rated_products">محصولات پرفروش</string>
+    <string name="label_popular_products">محبوبترین محصولات</string>
 </resources>

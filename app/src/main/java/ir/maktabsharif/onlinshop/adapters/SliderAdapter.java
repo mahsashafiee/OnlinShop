@@ -14,12 +14,12 @@ import ir.maktabsharif.onlinshop.models.Image;
 import ir.maktabsharif.onlinshop.models.Product;
 import ir.maktabsharif.onlinshop.network.WooCommerceRequestQueue;
 
-public class DiscountSliderAdapter extends SliderViewAdapter<DiscountSliderAdapter.DiscountImageHolder> {
+public class SliderAdapter extends SliderViewAdapter<SliderAdapter.DiscountImageHolder> {
 
     private Product mProduct;
     private Context mContext;
 
-    public DiscountSliderAdapter(Context context, Product product) {
+    public SliderAdapter(Context context, Product product) {
         mContext = context;
         mProduct = product;
     }

@@ -43,11 +43,9 @@ public class CategoriesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCategoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
-        mCategoryViewModel.wooCommerceRequest(RequestQualifier.MAINCATEGORY,
+        mCategoryViewModel.wooCommerceRequest(RequestQualifier.ALL_CATEGORIES,
                 TAG,
-                Category.class,
-                mCategoriesPaths,
-                mCategoriesQueryParam);
+                Category.class);
 
     }
 

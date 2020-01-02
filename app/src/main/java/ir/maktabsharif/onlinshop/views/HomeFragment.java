@@ -17,14 +17,13 @@ import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import ir.maktabsharif.onlinshop.R;
 import ir.maktabsharif.onlinshop.adapters.CategoryAdapter;
-import ir.maktabsharif.onlinshop.adapters.DiscountSliderAdapter;
+import ir.maktabsharif.onlinshop.adapters.SliderAdapter;
 import ir.maktabsharif.onlinshop.adapters.ProductAdapter;
 import ir.maktabsharif.onlinshop.models.Category;
 import ir.maktabsharif.onlinshop.models.Product;
@@ -38,25 +37,13 @@ public class HomeFragment extends Fragment {
     private HomeViewModel mHomeViewModel;
     private ProductAdapter mAdapter;
     private CategoryAdapter mCategoryAdapter;
-    private DiscountSliderAdapter mSliderAdapter;
-    private RecyclerView mProductsRecyclerView;
+    private SliderAdapter mSliderAdapter;
+    private RecyclerView mOnSaleRecyclerView;
+    private RecyclerView mTopRatedRecyclerView;
+    private RecyclerView mRecentRecyclerView;
+    private RecyclerView mPopularRecyclerView;
     private RecyclerView mCategoriesRecyclerView;
     private SliderView mSliderView;
-    private List<String> mProductsPaths = new ArrayList<String>() {{
-        add("products");
-    }};
-    private List<String> mSliderPaths = new ArrayList<String>(mProductsPaths) {{
-        add(String.valueOf(608));
-    }};
-    private List<String> mCategoriesPaths = new ArrayList<String>(mProductsPaths) {{
-        add("categories");
-    }};
-    private Map<String, String> mProductsQueryParam = new HashMap<String, String>() {{
-        put("orderby", "date");
-    }};
-    private Map<String, String> mCategoriesQueryParam = new HashMap<String, String>() {{
-        put("parent", String.valueOf(0));
-    }};
 
 
     @Override
@@ -69,9 +56,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRequest() {
-        mHomeViewModel.wooCommerceRequest(RequestQualifier.PRODUCTS, TAG, Product.class, mProductsPaths, mProductsQueryParam);
-        mHomeViewModel.wooCommerceRequest(RequestQualifier.HOMECATEGORIES, TAG, Category.class, mCategoriesPaths, mCategoriesQueryParam);
-        mHomeViewModel.wooCommerceRequest(TAG, mSliderPaths, new HashMap<>());
+        mHomeViewModel.wooCommerceRequest(RequestQualifier.ON_SALE_PRODUCTS, TAG, Product.class);
+        mHomeViewModel.wooCommerceRequest(RequestQualifier.RECENT_PRODUCTS, TAG, Product.class);
+        mHomeViewModel.wooCommerceRequest(RequestQualifier.TOP_RATED_PRODUCT, TAG, Product.class);
+        mHomeViewModel.wooCommerceRequest(RequestQualifier.POPULAR_PRODUCT, TAG, Product.class);
+        mHomeViewModel.wooCommerceRequest(RequestQualifier.MAIN_CATEGORIES, TAG, Category.class);
+        mHomeViewModel.wooCommerceRequest(TAG, 608);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,32 +76,47 @@ public class HomeFragment extends Fragment {
 
     private void setupObservers() {
 
-        mHomeViewModel.getProductLiveData().observe(this, products -> setupAdapter(products));
-        mHomeViewModel.getHomeCategoryLiveData().observe(this, categories -> setupCategoryAdapter(categories));
-        mHomeViewModel.getSliderLiveData().observe(this, categories -> setupSliderAdapter(categories));
+        mHomeViewModel.getRecentProductLiveData().observe(this, products -> setupAdapter(products, mRecentRecyclerView));
+        mHomeViewModel.getOnSaleProductLiveData().observe(this, products -> setupAdapter(products, mOnSaleRecyclerView));
+        mHomeViewModel.getTopRatedProductLiveData().observe(this, products -> setupAdapter(products, mTopRatedRecyclerView));
+        mHomeViewModel.getPopularProductLiveData().observe(this, products -> setupAdapter(products, mPopularRecyclerView));
+        mHomeViewModel.getHomeCategoryLiveData().observe(this, this::setupCategoryAdapter);
+        mHomeViewModel.getSliderLiveData().observe(this, this::setupSliderAdapter);
     }
 
     private void setupRecycler(View root) {
+
         mSliderView = root.findViewById(R.id.imageSlider);
-        mProductsRecyclerView = root.findViewById(R.id.on_sale_recycler_view);
+        mOnSaleRecyclerView = root.findViewById(R.id.on_sale_recycler_view);
+        mTopRatedRecyclerView = root.findViewById(R.id.top_rated_recycler_view);
+        mRecentRecyclerView = root.findViewById(R.id.recent_recycler_view);
+        mPopularRecyclerView = root.findViewById(R.id.popular_recycler_view);
         mCategoriesRecyclerView = root.findViewById(R.id.categories_recycler_view);
+
         mCategoriesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 6));
-        mProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
+
+        mOnSaleRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+        mTopRatedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+        mRecentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+        mPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
     }
 
-    public void setupAdapter(List<Product> products) {
+    private void setupAdapter(List<Product> products, RecyclerView recyclerView) {
         mAdapter = new ProductAdapter(getContext(), products);
-        mProductsRecyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
     }
 
-    public void setupCategoryAdapter(List<Category> categories) {
+    private void setupCategoryAdapter(List<Category> categories) {
         mCategoryAdapter = new CategoryAdapter(getContext(), categories);
         mCategoriesRecyclerView.setAdapter(mCategoryAdapter);
     }
 
-    public void setupSliderAdapter(Product product) {
-        mSliderAdapter = new DiscountSliderAdapter(getContext(), product);
+    private void setupSliderAdapter(Product product) {
+        mSliderAdapter = new SliderAdapter(getContext(), product);
         mSliderView.setSliderAdapter(mSliderAdapter);
         //set indicator animation by using SliderLayout.IndicatorAnimations.
         //:WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!

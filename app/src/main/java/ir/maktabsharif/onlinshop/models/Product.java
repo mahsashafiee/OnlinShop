@@ -12,6 +12,9 @@ public class Product {
     @Json(name = "name")
     private String mName;
 
+    @Json(name = "permalink")
+    private String mLink;
+
     @Json(name = "date_created")
     private String mDate;
 
@@ -136,6 +139,14 @@ public class Product {
 
     public void setImages(List<Image> images) {
         mImages = images;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public void setLink(String link) {
+        mLink = link;
     }
 
     @Override
