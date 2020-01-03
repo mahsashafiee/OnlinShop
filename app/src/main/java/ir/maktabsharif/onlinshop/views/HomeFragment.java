@@ -28,6 +28,7 @@ import ir.maktabsharif.onlinshop.adapters.ProductAdapter;
 import ir.maktabsharif.onlinshop.models.Category;
 import ir.maktabsharif.onlinshop.models.Product;
 import ir.maktabsharif.onlinshop.utils.RequestQualifier;
+import ir.maktabsharif.onlinshop.utils.SliderQualifier;
 import ir.maktabsharif.onlinshop.viewmodels.HomeViewModel;
 
 public class HomeFragment extends Fragment {
@@ -61,7 +62,7 @@ public class HomeFragment extends Fragment {
         mHomeViewModel.wooCommerceRequest(RequestQualifier.TOP_RATED_PRODUCT, TAG, Product.class);
         mHomeViewModel.wooCommerceRequest(RequestQualifier.POPULAR_PRODUCT, TAG, Product.class);
         mHomeViewModel.wooCommerceRequest(RequestQualifier.MAIN_CATEGORIES, TAG, Category.class);
-        mHomeViewModel.wooCommerceRequest(TAG, 608);
+        mHomeViewModel.wooCommerceRequest(TAG, 608, SliderQualifier.HOME_SLIDER);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -116,7 +117,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupSliderAdapter(Product product) {
-        mSliderAdapter = new SliderAdapter(getContext(), product);
+        mSliderAdapter = new SliderAdapter(getContext(), product, SliderQualifier.HOME_SLIDER);
         mSliderView.setSliderAdapter(mSliderAdapter);
         //set indicator animation by using SliderLayout.IndicatorAnimations.
         //:WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!

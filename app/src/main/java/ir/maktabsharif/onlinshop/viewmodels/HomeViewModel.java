@@ -3,18 +3,17 @@ package ir.maktabsharif.onlinshop.viewmodels;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
-import java.util.Map;
 
 import ir.maktabsharif.onlinshop.models.Category;
 import ir.maktabsharif.onlinshop.models.Product;
 import ir.maktabsharif.onlinshop.network.WooCommerceRepository;
 import ir.maktabsharif.onlinshop.network.WooCommerceRequestQueue;
 import ir.maktabsharif.onlinshop.utils.RequestQualifier;
+import ir.maktabsharif.onlinshop.utils.SliderQualifier;
 
 public class HomeViewModel extends AndroidViewModel {
 
@@ -32,8 +31,8 @@ public class HomeViewModel extends AndroidViewModel {
         mRequestQueue.addToRequestQueue(mRepository.wooCommerceAsyncRequest(qualifier, TAG, tClass));
     }
 
-    public void wooCommerceRequest(String TAG, @NonNull int id) {
-        mRequestQueue.addToRequestQueue(mRepository.wooCommerceAsyncRequest(TAG, id));
+    public void wooCommerceRequest(String TAG, @NonNull long id, SliderQualifier qualifier) {
+        mRequestQueue.addToRequestQueue(mRepository.wooCommerceAsyncRequest(TAG, id, qualifier));
     }
 
     public MutableLiveData<List<Product>> getOnSaleProductLiveData() {
@@ -57,7 +56,7 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<Product> getSliderLiveData() {
-        return mRepository.getSliderData();
+        return mRepository.getHomeSliderData();
     }
 
     public void cancelBatchRequest(String TAG) {

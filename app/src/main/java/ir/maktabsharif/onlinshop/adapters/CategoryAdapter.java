@@ -20,6 +20,8 @@ import ir.maktabsharif.onlinshop.models.Category;
 import ir.maktabsharif.onlinshop.network.WooCommerceRequestQueue;
 import ir.maktabsharif.onlinshop.utils.SquareNetworkImage;
 
+import static ir.maktabsharif.onlinshop.utils.Utils.setPaddingInDp;
+
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ColorHolder> {
 
     private Context mContext;
@@ -30,6 +32,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ColorH
             R.color.red_A400,
             R.color.pink_A400,
             R.color.purple_A400,
+            R.color.amber_A100,
             R.color.deep_purple_A400,
             R.color.indigo_A400,
             R.color.blue_A400,
@@ -38,12 +41,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ColorH
             R.color.teal_A400,
             R.color.green_A400,
             R.color.amber_A400,
+            R.color.deep_purple_A900,
             R.color.orange_A400,
             R.color.deep_orange_A400,
             R.color.brown_400,
-            R.color.gray_400,
-            R.color.gray_800,
-            R.color.blue_gray_400
+            R.color.pink_A300,
+            R.color.blue_gray_400,
+
     };
 
     public CategoryAdapter(Context context, List<Category> categories) {
@@ -61,7 +65,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ColorH
     @Override
     public ColorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.category_list_item, parent, false);
+                .inflate(R.layout.item_category_list, parent, false);
         return new ColorHolder(itemView);
     }
 
@@ -98,7 +102,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ColorH
             imageLoader.get(mCategory.getImage().getURL(),
                     ImageLoader.getImageListener(mNetworkImage,
                             R.drawable.ic_checkbox_blank,
-                            R.drawable.error_placeholder));
+                            R.drawable.product_error_placeholder));
 
 
             mNetworkImage.setImageUrl(mCategory.getImage().getURL(), imageLoader);
@@ -107,12 +111,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ColorH
             mTextView.setText(mCategory.getName());
 
             if (isMain) {
-                mNetworkImage.setPadding(88, 88, 88, 88);
+                setPaddingInDp(mContext, mNetworkImage, 32);
                 mTextView.setVisibility(View.GONE);
             } else
                 mTextView.setVisibility(View.VISIBLE);
-
-
         }
     }
 }

@@ -30,14 +30,6 @@ public class CategoriesFragment extends Fragment {
     private CategoryViewModel mCategoryViewModel;
     private RecyclerView mRecyclerView;
     private CategoryAdapter mAdapter;
-    private List<String> mCategoriesPaths = new ArrayList<String>() {{
-        add("products");
-        add("categories");
-    }};
-
-    private Map<String, String> mCategoriesQueryParam = new HashMap<String, String>() {{
-        put("per_page", String.valueOf(18));
-    }};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

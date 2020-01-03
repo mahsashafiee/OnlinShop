@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1.5"
+    android:orientation="vertical"
+    tools:showIn="@layout/fragment_single_product">
+
+    <TextView
+        android:id="@+id/single_product_name"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/product_description_container"
+        android:elevation="1dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:singleLine="true"
+        android:textStyle="bold"
+        tools:targetApi="lollipop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blue_gray_100"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/label_product_description"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/single_product_description"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:lineSpacingExtra="4dp"
+            android:maxLines="4"
+            android:padding="10dp"
+            tools:targetApi="jelly_bean_mr1"
+            tools:text="@tools:sample/lorem/random" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,9 +1,12 @@
 package ir.maktabsharif.onlinshop.utils;
 
+import android.content.Context;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,8 +31,32 @@ public class Utils {
         return uri.build().toString();
     }
 
-    public static Map<String, String> getQueryProductOrder(String orderby){
-        return new HashMap<String, String>(){{put("orderby", orderby);}};
+    public static void setPaddingInDp(Context context, NetworkImageView imageView, int dpPadding) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        int dpAsPixels = (int) (dpPadding * scale + 0.5f);
+        imageView.setPadding(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels);
+    }
+
+    public static Map<String, String> getQueryProductOrder(String orderby) {
+        return new HashMap<String, String>() {{
+            put("orderby", orderby);
+        }};
+    }
+
+    public static String textProcessor(String string) {
+
+        StringBuilder text = new StringBuilder();
+
+        if (string != null) {
+            for (Character character : string.toCharArray()) {
+                if (character.equals('<') || character.equals('>') || character.equals('/') ||
+                        character.equals('p') || character.equals('b') || character.equals('r')) {
+                } else
+                    text.append(character);
+            }
+        }
+
+        return text.toString();
     }
 }
 

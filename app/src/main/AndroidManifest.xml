@@ -12,8 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".views.HostFragmentActivity"
-            android:parentActivityName=".views.MainActivity"></activity>
+            android:name=".views.HostFragmentActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.MainActivity" />
+        </activity>
 
         <activity
             android:name=".views.MainActivity"

@@ -34,7 +34,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     @Override
     public ProductHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ProductHolder(LayoutInflater.from(mContext)
-                .inflate(R.layout.product_list_item, parent, false));
+                .inflate(R.layout.item_product_list, parent, false));
     }
 
     @Override
@@ -77,8 +77,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
 
             mImageLoader.get(mProduct.getImages().get(0).getURL(),
                     ImageLoader.getImageListener(mProductImage,
-                            R.drawable.image_placeholder,
-                            R.drawable.error_placeholder));
+                            R.drawable.product_image_placeholder,
+                            R.drawable.product_error_placeholder));
 
 
             mProductImage.setImageUrl(mProduct.getImages().get(0).getURL(), mImageLoader);

@@ -13,9 +13,9 @@
         android:orientation="vertical">
 
 
-        <include layout="@layout/home_search_view" />
+        <include layout="@layout/layout_search_view" />
 
-        <include layout="@layout/discount_slider" />
+        <include layout="@layout/layout_home_slider" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -29,7 +29,7 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="6"
             tools:itemCount="6"
-            tools:listitem="@layout/category_list_item" />
+            tools:listitem="@layout/item_category_list" />
 
         <TextView
             android:id="@+id/tv_on_sale_products"
@@ -48,7 +48,7 @@
             android:layout_below="@id/tv_on_sale_products"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/product_list_item" />
+            tools:listitem="@layout/item_product_list" />
 
         <TextView
             android:id="@+id/tv_recent_products"
@@ -67,7 +67,7 @@
             android:layout_below="@id/tv_recent_products"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/product_list_item" />
+            tools:listitem="@layout/item_product_list" />
 
         <TextView
             android:id="@+id/tv_top_rated_products"
@@ -86,7 +86,7 @@
             android:layout_below="@id/tv_top_rated_products"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/product_list_item" />
+            tools:listitem="@layout/item_product_list" />
 
 
         <TextView
@@ -106,7 +106,7 @@
             android:layout_below="@id/tv_popular_products"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/product_list_item" />
+            tools:listitem="@layout/item_product_list" />
 
 
     </RelativeLayout>

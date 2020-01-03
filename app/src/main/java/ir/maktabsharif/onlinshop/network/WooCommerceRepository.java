@@ -22,6 +22,7 @@ import java.util.List;
 import ir.maktabsharif.onlinshop.models.Category;
 import ir.maktabsharif.onlinshop.models.Product;
 import ir.maktabsharif.onlinshop.utils.RequestQualifier;
+import ir.maktabsharif.onlinshop.utils.SliderQualifier;
 
 import static ir.maktabsharif.onlinshop.utils.Utils.getStringURL;
 
@@ -37,13 +38,22 @@ public class WooCommerceRepository {
         return sInstance;
     }
 
+    @SuppressWarnings("unchecked")
     private MutableLiveData<List<Product>> mOnSaleProductData = new MutableLiveData();
+    @SuppressWarnings("unchecked")
     private MutableLiveData<List<Product>> mTopRatedProductData = new MutableLiveData();
+    @SuppressWarnings("unchecked")
     private MutableLiveData<List<Product>> mOnPopularProductData = new MutableLiveData();
+    @SuppressWarnings("unchecked")
     private MutableLiveData<List<Product>> mRecentProductData = new MutableLiveData();
+    @SuppressWarnings("unchecked")
     private MutableLiveData<List<Category>> mHomeCategoryData = new MutableLiveData();
+    @SuppressWarnings("unchecked")
     private MutableLiveData<List<Category>> mMainCategoryData = new MutableLiveData();
-    private MutableLiveData<Product> mSliderData = new MutableLiveData();
+    @SuppressWarnings("unchecked")
+    private MutableLiveData<Product> mHomeSliderData = new MutableLiveData();
+    @SuppressWarnings("unchecked")
+    private MutableLiveData<Product> mProductSliderData = new MutableLiveData();
 
 
     private WooCommerceRepository() {
@@ -59,7 +69,7 @@ public class WooCommerceRepository {
             try {
                 List<T> models = adapter.fromJson(response.toString());
 
-                setLiveDataValue(qualifier, models);
+                setListLiveDataValue(qualifier, models);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -77,7 +87,8 @@ public class WooCommerceRepository {
 
     }
 
-    public JsonObjectRequest wooCommerceAsyncRequest(String TAG, int id) {
+    public JsonObjectRequest wooCommerceAsyncRequest(String TAG, long id, SliderQualifier qualifier) {
+        mProductSliderData.setValue(new Product());
 
         Moshi moshi = new Moshi.Builder().build();
         Type type = Types.getRawType(Product.class);
@@ -86,14 +97,14 @@ public class WooCommerceRepository {
         Response.Listener<JSONObject> listener = response -> {
             try {
                 Product product = adapter.fromJson(response.toString());
-                mSliderData.setValue(product);
+                setSliderLiveData(product, qualifier);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         };
 
-        Response.ErrorListener errorListener = error -> Log.e(this.TAG, "wooCommerceAsyncRequest: ", error);
+        Response.ErrorListener errorListener = error -> Log.e(WooCommerceRepository.TAG, "wooCommerceAsyncRequest: ", error);
 
         JsonObjectRequest request = new JsonObjectRequest(
                 getStringURL(String.valueOf(id), new HashMap<>()),
@@ -117,8 +128,8 @@ public class WooCommerceRepository {
         return mHomeCategoryData;
     }
 
-    public MutableLiveData<Product> getSliderData() {
-        return mSliderData;
+    public MutableLiveData<Product> getHomeSliderData() {
+        return mHomeSliderData;
     }
 
     public MutableLiveData<List<Product>> getTopRatedProductData() {
@@ -129,11 +140,24 @@ public class WooCommerceRepository {
         return mOnPopularProductData;
     }
 
+    public MutableLiveData<Product> getProductSliderData() {
+        return mProductSliderData;
+    }
+
     public MutableLiveData<List<Product>> getRecentProductData() {
         return mRecentProductData;
     }
 
-    private <T> void setLiveDataValue(RequestQualifier qualifier, List<T> models) {
+    private void setSliderLiveData(Product product, SliderQualifier qualifier) {
+
+        if (qualifier.equals(SliderQualifier.HOME_SLIDER))
+            mHomeSliderData.setValue(product);
+        else mProductSliderData.setValue(product);
+
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> void setListLiveDataValue(RequestQualifier qualifier, List<T> models) {
         switch (qualifier) {
             case ON_SALE_PRODUCTS:
                 mOnSaleProductData.setValue((List<Product>) models);

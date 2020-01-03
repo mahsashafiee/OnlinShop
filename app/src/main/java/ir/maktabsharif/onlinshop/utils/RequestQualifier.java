@@ -11,7 +11,7 @@ public enum RequestQualifier {
     RECENT_PRODUCTS(null, getQueryProductOrder("date")),
     POPULAR_PRODUCT(null, getQueryProductOrder("popularity")),
     TOP_RATED_PRODUCT(null, getQueryProductOrder("rating")),
-    ALL_CATEGORIES("categories", new HashMap<String, String>(){{put("per_page", String.valueOf(15));}}),
+    ALL_CATEGORIES("categories", new HashMap<String, String>(){{put("per_page", String.valueOf(18));}}),
     MAIN_CATEGORIES("categories", new HashMap<String, String>(){{put("parent", String.valueOf(0));}});
 
     private final String mPath;

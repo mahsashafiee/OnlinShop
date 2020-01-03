@@ -9,11 +9,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import ir.maktabsharif.onlinshop.R;
 import ir.maktabsharif.onlinshop.utils.FragmentQualifier;
 
-public class HostFragmentActivity extends AppCompatActivity {
+public class HostFragmentActivity extends AppCompatActivity implements SingleProductFragment.HierarchicalNavigationButton {
 
     public static final String EXTRA_PRODUCT_ID = "extra_product_id";
 
@@ -65,5 +66,10 @@ public class HostFragmentActivity extends AppCompatActivity {
         }
 
         return null;
+    }
+
+    @Override
+    public void setOnClickListener() {
+        startActivity(MainActivity.newIntent(this));
     }
 }

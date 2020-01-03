@@ -1,5 +1,6 @@
 package ir.maktabsharif.onlinshop.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,6 +19,11 @@ import ir.maktabsharif.onlinshop.viewmodels.HomeViewModel;
 
 public class MainActivity extends AppCompatActivity implements ProductAdapter.SetProductOnClickListener {
 
+    public static Intent newIntent(Context target){
+        Intent intent = new Intent(target, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

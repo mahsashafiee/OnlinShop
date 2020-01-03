@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    tools:context=".views.SingleProductFragment"
+    tools:targetApi="jelly_bean_mr1">
+
+    <include
+        layout="@layout/layout_single_product_slider"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5" />
+
+    <include layout="@layout/layout_product_description" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:background="@color/blue_gray_100">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/add_to_card_background">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/material_icon_button"
+                android:layout_width="wrap_content"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="@string/add_to_card"
+                android:textStyle="bold"
+                app:icon="@drawable/ic_add_shopping_cart_white" />
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</LinearLayout>
